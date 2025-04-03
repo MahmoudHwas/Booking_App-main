@@ -1,5 +1,6 @@
 const dotenv = require("dotenv").config(); // تصحيح dotenv
 const express = require("express");
+const cors = require("cors");
 const connecteDB = require("./config/db.js");
 const app = express();
 const roomRoutes = require("./routes/roomRoutes.js");
@@ -14,6 +15,7 @@ const PORT = process.env.PORT || 5000;
 // Setup middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors()); // يسمح لأي دومين بإرسال الطلبات
 
 // Connect to database and start server
 const startServer = async () => {

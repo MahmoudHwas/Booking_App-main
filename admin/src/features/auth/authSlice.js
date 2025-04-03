@@ -5,7 +5,7 @@ const user = JSON.parse(localStorage.getItem("user"))
 
 export const registerUser = createAsyncThunk("auth/user", async(userData, thunkApi) => {
     try{
-        const res = await fetch("/api/users", {
+        const res = await fetch("https://booking-app-main-c9r3-git-main-mahmoudhwas-projects.vercel.app/api/users", {
             headers: {
                 "Content-Type" : "application/json"
             },
@@ -26,7 +26,7 @@ export const registerUser = createAsyncThunk("auth/user", async(userData, thunkA
 
 export const loginUser = createAsyncThunk("auth/login", async(userData, thunkApi)=> {
     try{
-        const res= await fetch("/api/users/login", {
+        const res= await fetch("https://booking-app-main-c9r3-git-main-mahmoudhwas-projects.vercel.app/api/users/login", {
             headers: {
                 "Content-Type" : "application/json"
             },
@@ -49,7 +49,7 @@ export const loginUser = createAsyncThunk("auth/login", async(userData, thunkApi
 
 export const logoutUser = createAsyncThunk("auth/logout", async(_, thunkApi)=> {
     try{
-        const res = await fetch("/api/users/logout");
+        const res = await fetch("https://booking-app-main-c9r3-git-main-mahmoudhwas-projects.vercel.app/api/users/logout");
         if(!res.ok) {
             const error = await res.json();
             return thunkApi.rejectWithValue(error)
