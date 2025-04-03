@@ -1,6 +1,6 @@
 const {Router} = require("express");
 const { getBookings, createBookings, singleBooings, updateBooings, deleteBookings } = require("../controllers/bookingsController");
-const { auth } = require("../middleware/authMiddleWare");
+const { auth } = require("../middleware/authMiddleware");
 
 const router = Router();
 
