@@ -13,7 +13,7 @@ export const createRoom =  createAsyncThunk("rooms/create", async (roomData, thu
     try{
       
         
-        const res = await fetch("https://booking-app-main-git-main-mahmoudhwas-projects.vercel.app/api/rooms", {
+        const res = await fetch("/api/rooms", {
             headers: {
                 "Content-Type": "application/json",
             },
@@ -40,7 +40,7 @@ export const createRoom =  createAsyncThunk("rooms/create", async (roomData, thu
 export const getRooms =  createAsyncThunk("rooms/getall", async (_, thunkApi) => {
     try{
 
-        const res = await fetch("https://booking-app-main-git-main-mahmoudhwas-projects.vercel.app/api/rooms")
+        const res = await fetch("/api/rooms")
         if(!res.ok) {
             const error = await res.json();
             return thunkApi.rejectWithValue(error)
@@ -62,7 +62,7 @@ export const updateRoom = createAsyncThunk("rooms/update", async (roomData, thun
       try {
         const { roomId, ...rest } = roomData;
        ;
-        const res = await fetch(`https://booking-app-main-git-main-mahmoudhwas-projects.vercel.app/api/rooms/${roomId}`, {
+        const res = await fetch(`/api/rooms/${roomId}`, {
             headers: {
                 "Content-Type": "application/json",
             },
@@ -89,7 +89,7 @@ export const updateRoom = createAsyncThunk("rooms/update", async (roomData, thun
 export const deleteRoom = createAsyncThunk("rooms/delete",
     async (roomId, thunkApi) => {
       try {
-        const res = await fetch(`https://booking-app-main-git-main-mahmoudhwas-projects.vercel.app/api/rooms/${roomId}`, {
+        const res = await fetch(`/api/rooms/${roomId}`, {
           method: "DELETE",
         });
         const data = await res.json();

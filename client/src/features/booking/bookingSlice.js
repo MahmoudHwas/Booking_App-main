@@ -13,7 +13,7 @@ export const createBooking = createAsyncThunk(
   "booking/create",
   async (bookingData, thunkApi) => {
     try {
-      const res = await fetch(`https://booking-app-main-git-main-mahmoudhwas-projects.vercel.app/api/bookings`, {
+      const res = await fetch(`/api/bookings`, {
         headers: {
           "Content-Type": "application/json",
         },

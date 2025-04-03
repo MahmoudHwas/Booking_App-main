@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+const BASE_URL = process.env.REACT_APP_API_URL || "https://booking-app-main-c9r3.vercel.app";
 
 
 const  initialState = {
@@ -14,7 +15,7 @@ export const createBooking = createAsyncThunk(
   "booking/create",
   async (bookingData, thunkApi) => {
     try {
-      const res = await fetch(`https://booking-app-main-henna.vercel.app/api/bookings`, {
+      const res = await fetch(`${BASE_URL}/api/bookings`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -38,7 +39,7 @@ export const createBooking = createAsyncThunk(
 export const getBooking =  createAsyncThunk("booking/getbookings", async (_, thunkApi) => {
     try{
 
-        const res = await fetch("https://booking-app-main-henna.vercel.app/api/bookings")
+        const res = await fetch(`${BASE_URL}/api/bookings`)
         if(!res.ok) {
             const error = await res.json();
             return thunkApi.rejectWithValue(error)
@@ -61,7 +62,7 @@ export const getBooking =  createAsyncThunk("booking/getbookings", async (_, thu
 export const deleteBooking = createAsyncThunk("booking/delete",
     async (id, thunkApi) => {
       try {
-        const res = await fetch(`https://booking-app-main-henna.vercel.app/api/bookings/${id}`, {
+        const res = await fetch(`${BASE_URL}/api/bookings/${id}`, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -82,7 +83,7 @@ export const deleteBooking = createAsyncThunk("booking/delete",
     "bookings/confirm",
     async (bookingId, thunkApi) => {
       try {
-        const res = await fetch(`https://booking-app-main-henna.vercel.app/api/bookings/${bookingId}`, {
+        const res = await fetch(`${BASE_URL}/api/bookings/${bookingId}`, {
           headers: {
             "Content-Type": "application/json",
           },
