@@ -7,7 +7,7 @@ const bookingRoutes = require("./routes/bookingRoutes.js")
 const usersRoutes = require("./routes/userRoutes.js")
 const { errorHandler } = require('./middleware/errorHandler.js');
 const cookieParser = require("cookie-parser");
-const { auth } = require('./middleware/authMiddleWare.js');
+const { auth } = require('./middleware/authMiddleware.js');
 dotenv()
 // setup middleware
 app.use(express.json())
