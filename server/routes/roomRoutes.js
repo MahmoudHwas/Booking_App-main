@@ -1,6 +1,6 @@
 const {Router} = require("express");
 const {getRooms, createRoom, getSingleRoom, updateRoom, deleteRoom} = require("../controllers/roomController");
-const { auth } = require("../middleware/authMiddleWare");
+const { auth } = require("../middleware/authMiddleware");
 
 const router = Router();
 
