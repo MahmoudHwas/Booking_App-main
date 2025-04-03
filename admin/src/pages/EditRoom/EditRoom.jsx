@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { updateRoom, reset } from "../../features/room/roomSlice";
 import { useDispatch, useSelector } from "react-redux";
 const EditRoom = () => {
+  const BASE_URL = process.env.REACT_APP_API_URL || "https://booking-app-main-c9r3.vercel.app";
+
     const {id} = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -19,7 +21,7 @@ const EditRoom = () => {
     useEffect(() => {
         const getRoom = async () => {
                 try{
-                    const res = await fetch(`/api/rooms/${id}`);
+                    const res = await fetch(`${BASE_URL}/api/rooms/${id}`);
                     const data = await res.json();
                     const  {roomNumbers, ...rest} = data
                     const roomNumb = roomNumbers.map((item) => item.number);

@@ -4,10 +4,13 @@ import { useDispatch, useSelector } from "react-redux"
 import { reset, deleteRoom } from "../../features/room/roomSlice"
 import "./room.styles.scss"
 import Carousel from "../../componenet/Carousel/Carousel"
+
+
 const Room = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const {id} = useParams()
+  const BASE_URL = process.env.REACT_APP_API_URL || "https://booking-app-main-c9r3.vercel.app";
 
    const { isSuccess} = useSelector((state) => state.room)
 const {user} = useSelector((state)=> state.auth);
@@ -26,7 +29,7 @@ const {user} = useSelector((state)=> state.auth);
     const getRoom = async () => {
     
       try{
-        const res = await fetch(`/api/rooms/${id}`)
+        const res = await fetch(`${BASE_URL}/api/rooms/${id}`)
         if(res.ok) {
           const data = await res.json();
           setRoom(data);  

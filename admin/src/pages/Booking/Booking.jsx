@@ -9,7 +9,8 @@ const Booking = () => {
     const {id} = useParams();
     const [booking, setBooking] = useState(null);
     const {isSuccess, isLoading, isError, message} = useSelector(state => state.booking)
-   
+    const BASE_URL = process.env.REACT_APP_API_URL || "https://booking-app-main-c9r3.vercel.app";
+
 
     useEffect(() => {
       if (isSuccess) {
@@ -22,7 +23,7 @@ const Booking = () => {
 
         const getBooking = async()=> {
             try{
-                const res = await fetch(`/api/bookings/${id}`);
+                const res = await fetch(`${BASE_URL}/api/bookings/${id}`);
                 const data = await res.json();
                 setBooking(data)
               
