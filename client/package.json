@@ -25,7 +25,7 @@
       "react-app/jest"
     ]
   },
-  "proxy": "https://booking-app-main-c9r3-git-main-mahmoudhwas-projects.vercel.app",
+  "proxy": "http://localhost:5000",
   "browserslist": {
     "production": [
       ">0.2%",
