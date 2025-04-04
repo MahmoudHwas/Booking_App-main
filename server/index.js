@@ -16,8 +16,10 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: "https://booking-app-main-henna.vercel.app", // الـ Frontend URL
+  origin: "https://booking-app-main-henna.vercel.app", // الـ Frontend URL بالظبط
   credentials: true, // يسمح بالـ Cookies
+  methods: ["GET", "POST", "PUT", "DELETE"], // الـ Methods المسموح بيها
+  allowedHeaders: ["Content-Type"], // الـ Headers المسموح بيها
 }));
 
 // Connect to database and start server
