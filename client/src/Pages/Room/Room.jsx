@@ -8,6 +8,7 @@ const Room = () => {
   const {id} = useParams()
   const dispatch = useDispatch()
 
+  const BASE_URL = process.env.REACT_APP_API_URL || "https://booking-app-main-c9r3.vercel.app";
 
   const [room, setRoom] = useState(null);
 
@@ -16,7 +17,7 @@ const Room = () => {
     const getRoom = async () => {
     
       try{
-        const res = await fetch(`/api/rooms/${id}`)
+        const res = await fetch(`${BASE_URL}/api/rooms/${id}`)
         if(res.ok) {
           const data = await res.json();
           setRoom(data);  

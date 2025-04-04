@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+const BASE_URL = process.env.REACT_APP_API_URL || "https://booking-app-main-c9r3.vercel.app";
 
 
 const  initialState = {
@@ -13,7 +14,7 @@ export const createBooking = createAsyncThunk(
   "booking/create",
   async (bookingData, thunkApi) => {
     try {
-      const res = await fetch(`/api/bookings`, {
+      const res = await fetch(`${BASE_URL}/api/bookings`, {
         headers: {
           "Content-Type": "application/json",
         },
