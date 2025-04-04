@@ -12,15 +12,26 @@ const { auth } = require("./middleware/authMiddleware.js");
 
 const PORT = process.env.PORT || 5000;
 
-// Setup middleware
+// Setup CORS لقبول أي Origin مع Credentials
+app.use(cors({
+  origin: (origin, callback) => {
+    // سمح بأي Origin أو لو مفيش Origin (زي Postman)
+    callback(null, origin || "*");
+  },
+  credentials: true, // يسمح بالـ Cookies
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type"],
+}));
+
+// Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-  origin: "https://booking-app-main-henna.vercel.app", // الـ Frontend URL بالظبط
-  credentials: true, // يسمح بالـ Cookies
-  methods: ["GET", "POST", "PUT", "DELETE"], // الـ Methods المسموح بيها
-  allowedHeaders: ["Content-Type"], // الـ Headers المسموح بيها
-}));
+
+// للتأكد من الـ Origin
+app.use((req, res, next) => {
+  console.log("Request Origin:", req.headers.origin);
+  next();
+});
 
 // Connect to database and start server
 const startServer = async () => {
