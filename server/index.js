@@ -15,8 +15,12 @@ const PORT = process.env.PORT || 5000;
 // Setup CORS لقبول أي Origin مع Credentials
 app.use(cors({
   origin: (origin, callback) => {
-    // سمح بأي Origin أو لو مفيش Origin (زي Postman)
-    callback(null, origin || "*");
+    // رجع الـ Origin اللي جاي من الـ Request
+    if (origin) {
+      callback(null, origin); // رجع الـ Origin بتاع الـ Frontend
+    } else {
+      callback(null, true); // لو مفيش Origin (زي Postman)، سمح بالطلب
+    }
   },
   credentials: true, // يسمح بالـ Cookies
   methods: ["GET", "POST", "PUT", "DELETE"],
@@ -27,9 +31,10 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-// للتأكد من الـ Origin
+// Log الـ Origin للتأكد
 app.use((req, res, next) => {
   console.log("Request Origin:", req.headers.origin);
+  console.log("Response ACAO:", req.headers.origin || "No origin");
   next();
 });
 
