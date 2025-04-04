@@ -12,31 +12,32 @@ const { auth } = require("./middleware/authMiddleware.js");
 
 const PORT = process.env.PORT || 5000;
 
-// Setup CORS لقبول أي Origin مع Credentials
+// Setup CORS
 app.use(cors({
   origin: (origin, callback) => {
-    // رجع الـ Origin اللي جاي من الـ Request
+    console.log("CORS Origin Received:", origin); // Log الـ Origin اللي جاي
     if (origin) {
-      callback(null, origin); // رجع الـ Origin بتاع الـ Frontend
+      callback(null, origin); // رجع الـ Origin بتاع الـ Request
     } else {
-      callback(null, true); // لو مفيش Origin (زي Postman)، سمح بالطلب
+      callback(null, true); // لو مفيش Origin (زي Postman)
     }
   },
-  credentials: true, // يسمح بالـ Cookies
+  credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type"],
 }));
 
-// Middleware
-app.use(express.json());
-app.use(cookieParser());
-
-// Log الـ Origin للتأكد
+// Middleware للتأكد من الـ Headers
 app.use((req, res, next) => {
   console.log("Request Origin:", req.headers.origin);
-  console.log("Response ACAO:", req.headers.origin || "No origin");
+  res.on("finish", () => {
+    console.log("Response ACAO:", res.getHeader("Access-Control-Allow-Origin"));
+  });
   next();
 });
+
+app.use(express.json());
+app.use(cookieParser());
 
 // Connect to database and start server
 const startServer = async () => {
