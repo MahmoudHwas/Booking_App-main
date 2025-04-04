@@ -41,36 +41,33 @@ const createUser = async (req, res, next) => {
 };
 
 // loginUser
-const loginUser = async (req, res, next) => {
-    try {
-        const { email, password } = req.body;
-
-        const user = await User.findOne({ email });
-        if (!user) {
-            res.status(400);
-            throw new Error("your email doesnt exist");
-        }
-
-        // compare password
-        const comparePassword = await bcrypt.compare(password, user.password);
-        if (!comparePassword) {
-            res.status(400);
-            throw new Error("incorrect password or username");
-        }
-
-        // generate token
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-        res.cookie("jwt", token);
-        const { password: userPassword, ...rest } = user._doc;
-
-        return res.status(200).json({
-            message: "logged successfully",
-            data: { ...rest },
-        });
-    } catch (error) {
-        next(error);
+const loginUser = async (req, res) => {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+  
+    if (user && (await user.matchPassword(password))) { // افترضت matchPassword
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+        expiresIn: "30d",
+      });
+  
+      // ضيف الـ Token في الـ Cookies
+      res.cookie("jwt", token, {
+        httpOnly: true, // يمنع الوصول للـ Cookie من الـ JavaScript
+        secure: process.env.NODE_ENV === "production", // Secure في الـ Production
+        sameSite: "None", // لازم تكون None عشان يشتغل بين دومينات مختلفة
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 يوم
+      });
+  
+      res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        token, // رجع الـ Token للـ Frontend لو عايز تخزنه في LocalStorage
+      });
+    } else {
+      res.status(401).json({ message: "Invalid email or password" });
     }
-};
+  };
 
 const logouteUser = async (req, res, next) => {
     res.cookie("jwt", "", { expiresIn: "-1" });

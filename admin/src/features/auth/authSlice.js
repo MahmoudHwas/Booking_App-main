@@ -32,26 +32,27 @@ export const registerUser = createAsyncThunk("auth/user", async (userData, thunk
 });
 
 export const loginUser = createAsyncThunk("auth/login", async (userData, thunkApi) => {
-  try {
-    const res = await fetch(`${BASE_URL}/api/users/login`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify(userData),
-      credentials: "include", // يبعت الـ Cookies
-    });
-    if (!res.ok) {
-      const error = await res.json();
-      return thunkApi.rejectWithValue(error);
+    try {
+      const res = await fetch(`${BASE_URL}/api/users/login`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(userData),
+        credentials: "include",
+      });
+      if (!res.ok) {
+        const error = await res.json();
+        return thunkApi.rejectWithValue(error);
+      }
+      const data = await res.json();
+      console.log("Login Response:", data); // شوف الـ Token بيرجع ولا لأ
+      localStorage.setItem("user", JSON.stringify(data));
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
     }
-    const data = await res.json();
-    localStorage.setItem("user", JSON.stringify(data));
-    return data;
-  } catch (error) {
-    return thunkApi.rejectWithValue(error.message);
-  }
-});
+  });
 
 export const logoutUser = createAsyncThunk("auth/logout", async (_, thunkApi) => {
   try {
