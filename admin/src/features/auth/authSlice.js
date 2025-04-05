@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const BASE_URL = process.env.REACT_APP_API_URL || "https://booking-app-main-c9r3.vercel.app";
 
 const initialState = {
   user: JSON.parse(localStorage.getItem("user")) || null,
@@ -12,7 +11,7 @@ const initialState = {
 
 export const registerUser = createAsyncThunk("auth/user", async (userData, thunkApi) => {
   try {
-    const res = await fetch(`${BASE_URL}/api/users`, {
+    const res = await fetch(`/api/users`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -33,13 +32,13 @@ export const registerUser = createAsyncThunk("auth/user", async (userData, thunk
 
 export const loginUser = createAsyncThunk("auth/login", async (userData, thunkApi) => {
     try {
-      const res = await fetch(`${BASE_URL}/api/users/login`, {
+      const res = await fetch(`/api/users/login`, {
         headers: {
           "Content-Type": "application/json",
         },
         method: "POST",
         body: JSON.stringify(userData),
-        credentials: "include",
+       
       });
       if (!res.ok) {
         const error = await res.json();
@@ -56,7 +55,7 @@ export const loginUser = createAsyncThunk("auth/login", async (userData, thunkAp
 
 export const logoutUser = createAsyncThunk("auth/logout", async (_, thunkApi) => {
   try {
-    const res = await fetch(`${BASE_URL}/api/users/logout`, {
+    const res = await fetch(`/api/users/logout`, {
       headers: {
         "Content-Type": "application/json",
       },

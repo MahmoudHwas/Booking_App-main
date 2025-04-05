@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const BASE_URL = process.env.REACT_APP_API_URL || "https://booking-app-main-c9r3.vercel.app";
 
 const initialState = {
   bookings: [],
@@ -13,7 +12,7 @@ const initialState = {
 
 export const createBooking = createAsyncThunk("booking/create", async (bookingData, thunkApi) => {
   try {
-    const res = await fetch(`${BASE_URL}/api/bookings`, {
+    const res = await fetch(`/api/bookings`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -33,7 +32,7 @@ export const createBooking = createAsyncThunk("booking/create", async (bookingDa
 
 export const getBooking = createAsyncThunk("booking/getbookings", async (_, thunkApi) => {
   try {
-    const res = await fetch(`${BASE_URL}/api/bookings`, {
+    const res = await fetch(`/api/bookings`, {
       credentials: "include", // يبعت الـ Cookies
     });
     if (!res.ok) {
@@ -49,7 +48,7 @@ export const getBooking = createAsyncThunk("booking/getbookings", async (_, thun
 
 export const deleteBooking = createAsyncThunk("booking/delete", async (id, thunkApi) => {
   try {
-    const res = await fetch(`${BASE_URL}/api/bookings/${id}`, {
+    const res = await fetch(`/api/bookings/${id}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -68,7 +67,7 @@ export const deleteBooking = createAsyncThunk("booking/delete", async (id, thunk
 
 export const confirmBooking = createAsyncThunk("bookings/confirm", async (bookingId, thunkApi) => {
   try {
-    const res = await fetch(`${BASE_URL}/api/bookings/${bookingId}`, {
+    const res = await fetch(`/api/bookings/${bookingId}`, {
       headers: {
         "Content-Type": "application/json",
       },

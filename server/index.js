@@ -13,19 +13,7 @@ const { auth } = require("./middleware/authMiddleware.js");
 const PORT = process.env.PORT || 5000;
 
 // Setup CORS
-app.use(cors({
-  origin: (origin, callback) => {
-    console.log("CORS Origin Received:", origin); // Log الـ Origin اللي جاي
-    if (origin) {
-      callback(null, origin); // رجع الـ Origin بتاع الـ Request
-    } else {
-      callback(null, true); // لو مفيش Origin (زي Postman)
-    }
-  },
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type"],
-}));
+
 
 // Middleware للتأكد من الـ Headers
 app.use((req, res, next) => {
