@@ -13,7 +13,7 @@ const { auth } = require("./middleware/authMiddleware.js");
 const PORT = process.env.PORT || 5000;
 
 // Setup CORS
-
+app.use(cors())
 
 // Middleware للتأكد من الـ Headers
 app.use((req, res, next) => {
